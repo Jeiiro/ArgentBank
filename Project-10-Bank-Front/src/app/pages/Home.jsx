@@ -34,7 +34,7 @@ function Home() {
       <Navbar />
       <main>
         <Hero />
-        <section className="flex">
+        <section className="flex flex-col md:flex-row">
           {features.map((feature, index) => (
             <Feature key={index} {...feature} />
           ))}
