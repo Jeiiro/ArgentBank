@@ -1,9 +1,9 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+  version: "1.0.0"
+  termsOfService: "http://swagger.io/terms/"
 host: localhost:3001
 basePath: /api/v1
 schemes:
@@ -21,17 +21,17 @@ paths:
           description: Login Payload
           required: true
           schema:
-            $ref: '#/definitions/Login'
+            $ref: "#/definitions/Login"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Login Successfully
           schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
+            $ref: "#/definitions/LoginResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
   /user/signup:
     post:
@@ -45,17 +45,17 @@ paths:
           description: Signup Payload
           required: true
           schema:
-            $ref: '#/definitions/User'
+            $ref: "#/definitions/User"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: Signup Successfully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
   /user/profile:
     post:
@@ -74,13 +74,13 @@ paths:
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
     put:
       security:
@@ -100,19 +100,19 @@ paths:
           description: Update user profile attributes
           required: true
           schema:
-            $ref: '#/definitions/UserProfile'
+            $ref: "#/definitions/UserProfile"
       produces:
         - application/json
       responses:
-        '200':
+        "200":
           description: User profile retrieved successully
           schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
+            $ref: "#/definitions/ApiResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
-          
+
   /accounts/{accountId}/transactions:
     get:
       security:
@@ -125,24 +125,24 @@ paths:
         - in: path
           name: accountId
           type: string
-          description: Transactions Id
+          description: Account ID
           required: true
-        - in: body
-          name: body
-          description: Transactions by month payload
-          required: true
-          schema:
-            $ref: '#/definitions/Month'
+        - in: query
+          name: month
+          type: string
+          pattern: '^\d{4}-(0[1-9]|1[0-2])$'
+          description: Month to filter transactions (YYYY-MM)
+          required: false
       produces:
         - application/json
       responses:
-        '200':
-          description: Login Successfully
+        "200":
+          description: Transactions retrieved successfully
           schema:
-            $ref: '#/definitions/AllTransactions'
-        '400':
-          description: Invalid Fields
-        '500':
+            $ref: "#/definitions/AllTransactions"
+        "400":
+          description: Invalid Parameters
+        "500":
           description: Internal Server Error
   /accounts/transactions/{transactionId}:
     get:
@@ -155,17 +155,17 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description:  Transaction id 
+          description: Transaction id
           required: true
           type: string
       responses:
-        '200':
+        "200":
           description: Transaction retrieved successully
           schema:
-            $ref: '#/definitions/ApiTransactionResponse'
-        '400':
+            $ref: "#/definitions/ApiTransactionResponse"
+        "400":
           description: Invalid Fields
-        '500':
+        "500":
           description: Internal Server Error
     patch:
       security:
@@ -177,7 +177,7 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description:  Transaction id 
+          description: Transaction id
           required: true
           type: string
         - in: body
@@ -185,18 +185,18 @@ paths:
           description: Update transaction payload
           required: true
           schema:
-            $ref: '#/definitions/UpdateTransaction'
+            $ref: "#/definitions/UpdateTransaction"
       #produces:
-       # - application/json
+      # - application/json
       responses:
-        '200':
+        "200":
           description: Transaction updated successully
           schema:
-            $ref: '#/definitions/ApiTransactionResponse'
-        '400':
+            $ref: "#/definitions/ApiTransactionResponse"
+        "400":
           description: Invalid Fields
-        '500':
-          description: Internal Server Error        
+        "500":
+          description: Internal Server Error
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -251,15 +251,15 @@ definitions:
         type: string
       lastName:
         type: string
-  Month: 
+  Month:
     properties:
-      month: 
+      month:
         type: number
         description: active month
   AllTransactions:
     type: array
     items:
-      $ref: '#/definitions/ApiTransactionResponse'
+      $ref: "#/definitions/ApiTransactionResponse"
   ApiTransactionResponse:
     type: object
     properties:
@@ -271,12 +271,12 @@ definitions:
         type: integer
       description:
         type: string
-      transactionType: 
+      transactionType:
         type: string
-      category: 
+      category:
         type: string
-      note: 
-        type: string        
+      note:
+        type: string
   UpdateTransaction:
     properties:
       category:
@@ -284,4 +284,4 @@ definitions:
         description: category value
       note:
         type: string
-        description: note value      
+        description: note value
